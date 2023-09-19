@@ -4,5 +4,24 @@ block content
   h1(style='center') Credit Accorder
 
   div.container
+    p Input ORCID identifier:
     input#orcid(text="Input orcid....")
+    button.button#goButton Submit
+
+    script.
+      // JavaScript to handle the button click
+      document.getElementById('goButton').addEventListener('click', function() {
+        var inputValue = document.getElementById('orcid').value;
+        if(inputValue.match(/http/)) {
+          const sp = inputValue.split('/')
+          inputValue = sp[sp.length-1];
+        }
+        
+        // Transform the input value if necessary (e.g., prepend with a base URL)
+        const url = '/view/' + inputValue;
+
+        // Navigate to the page
+        window.location.href = url;
+      });
+
 

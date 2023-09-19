@@ -74,6 +74,8 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/view/:orcid', function(req, res, next) {
+  console.log(req.params.orcid);
+
   if(req.params.orcid.match(/http/)) {
     return res.redirect('/view/' + req.params.orcid.split('/').last());
   }
