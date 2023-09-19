@@ -1,0 +1,21 @@
+extends layout
+
+block content
+  div.container
+    h1(style='center') Credit Accorder
+    h3 ORCID-linked Class Contributions
+    table.table
+      thead.thead-dark
+        tr
+          th 
+            b Ontology
+          th
+            b Count
+      tbody
+        each item, k in classMatches
+            tr
+              td=k
+              td #{item.length}
+
+    h3 ORCID-linked Ontology-level Contributions
+    p #{Object.keys(ontologyMatches).join(', ')}
