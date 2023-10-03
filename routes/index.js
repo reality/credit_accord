@@ -73,14 +73,14 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Credit Accord' });
 });
 
-router.get('/view/:orcid', function(req, res, next) {
-  console.log(req.params.orcid);
+router.get('/view', function(req, res, next) {
+  console.log(req.user)
 
-  if(req.params.orcid.match(/http/)) {
+  /*if(req.params.orcid.match(/http/)) {
     return res.redirect('/view/' + req.params.orcid.split('/').last());
   }
   const classMatches = searchORCID(classCredit, req.params.orcid);
-  const ontologyMatches = searchORCID(ontologyCredit, req.params.orcid);
+  const ontologyMatches = searchORCID(ontologyCredit, req.params.orcid);*/
   res.render('view', { title: 'Credit Accord', ontologyMatches: groupBy(ontologyMatches, 'oid'), classMatches: groupBy(classMatches, 'oid') })
 });
 
