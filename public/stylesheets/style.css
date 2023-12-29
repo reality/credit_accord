@@ -1,8 +1,18 @@
 body {
   padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  font-family: 'Helvetica Neue', sans-serif; 
+  font-size:17px;
+  line-height: 1.5;
+}
+p {
+
+  padding:5px;
 }
 
 a {
   color: #00B7FF;
+}
+
+.btn {
+margin:5px;
 }

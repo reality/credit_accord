@@ -2,7 +2,12 @@ extends layout
 
 block content
   div.container
-    h1(style='center') Credit Accorder
+    h1(style='text-align:center') Credit Accorder
+
+    p Logged in as #{name} (ORCID: #{orcid})
+
+    p We found the following contributions to semantic artefacts:
+
     h3 ORCID-linked Class Contributions
     table.table
       thead.thead-dark
@@ -12,10 +17,52 @@ block content
           th
             b Count
       tbody
-        each item, k in classMatches
+        each item, k in data.orcidClassMatches
             tr
               td=k
               td #{item.length}
 
+    p Note: Class contributions may appear for ontologies you did not directly contribute to. This will be because those ontologies import a class from another ontology that you did contribute directly to. We count this as an additional contribution.
+
     h3 ORCID-linked Ontology-level Contributions
-    p #{Object.keys(ontologyMatches).join(', ')}
+    table.table
+      thead.thead-dark
+        tr
+          th 
+            b Ontology
+      tbody
+        each item, k in data.orcidOntologyMatches
+            tr
+              td=k
+    
+    button.btn.btn-primary Add contributions to ORCID
+    button.btn.btn-primary Automatically synchronise future contributions
+
+    br
+    br
+    p In addition, we also found the following contribution information that may refer to you, by matching the name field associated with your ORCID. To add these contributions to your ORCID profile, you must update the semantic artefact concerned, replacing your name with your ORCID.
+
+    h3 Name-linked Class Contributions
+    table.table
+      thead.thead-dark
+        tr
+          th 
+            b Ontology
+          th
+            b Count
+      tbody
+        each item, k in data.nameClassMatches
+            tr
+              td=k
+              td #{item.length}
+
+    h3 Name-linked Ontology Contributions
+    table.table
+      thead.thead-dark
+        tr
+          th 
+            b Ontology
+      tbody
+        each item, k in data.nameOntologyMatches
+            tr
+              td=k

@@ -1,24 +1,22 @@
 extends layout
 
 block content
-  h1(style='center') Credit Accorder
+  h1(style='text-align:center;') Credit Accorder
 
   div.container
+    p This website will help you to add credit attributions for your contributions to OBO Foundry semantic artefacts to your ORCID ID. The reasons for doing this are:
+    ul
+      li To give you credit for your hard work
+      li To support costing of semantic work in grant applications and budgeting.
+      li To encourage people to use Globally Unique, Persistent, and Resolvable Identifiers (GUPRI) for credit and source attributions in semantic artefacts, which will in turn:
+        ul 
+          li Help to establish provenance across knowledge networks.
+          li Support orthogonality of semantic artefacts.
+          li Make semantic artefacts more FAIR.
+    p By logging in with your ORCID below, you are consenting to this application seeing your name and ORCID ID, and with correlating those variables with public semantic artefact contributions. You will be able to confirm whether you want any contribution information added to your ORCID profile, for which you must also grant permission for the application to make changes to your ORCID profile. We will record the ORCID identifiers of those who used this service for the purposes of running the application, and we may use summary statistics on those data to identify in a follow-up study whether our application had any positive benefit on attribution data in semantic artefacts.
+    p Our attribution data were identified from public artefacts, you may email l.slater.1 [at] bham.ac.uk to remove any of your data from our database, application, and/or any of our subsequent analyses.
     p Login with your ORCID to get started! 
-    script.
-      // JavaScript to handle the button click
-      document.getElementById('goButton').addEventListener('click', function() {
-        var inputValue = document.getElementById('orcid').value;
-        if(inputValue.match(/http/)) {
-          const sp = inputValue.split('/')
-          inputValue = sp[sp.length-1];
-        }
-        
-        // Transform the input value if necessary (e.g., prepend with a base URL)
-        const url = '/view/' + inputValue;
-
-        // Navigate to the page
-        window.location.href = url;
-      });
-
+    a.btn.btn-primary(href="/auth/orcid")
+      img(src="/images/ORCID-iD_icon-128x128.png" alt="ORCID Icon" width="24" height="24" style="vertical-align: middle; margin-right: 10px;")
+      | Login with ORCID
 

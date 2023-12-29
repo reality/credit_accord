@@ -32,8 +32,8 @@ app.use(session({
 }));
 
 passport.use('orcid', new OAuth2Strategy({
-    authorizationURL: 'https://orcid.org/oauth/authorize?response_type=code',
-    tokenURL: 'https://orcid.org/oauth/token',
+    authorizationURL: 'https://sandbox.orcid.org/oauth/authorize?response_type=code',
+    tokenURL: 'https://sandbox.orcid.org/oauth/token',
     clientID: clientID,
     clientSecret: clientSecret,
     callbackURL: "https://credit.phenome.digital/auth/orcid/callback"
@@ -57,7 +57,7 @@ passport.deserializeUser((user, done) => {
 app.use('/', indexRouter);
 
 app.get('/auth/orcid', passport.authenticate('orcid', {
-  scope: [ '/authenticate' ]
+  scope: [ '/authenticate', '/activities/update', '/read-limited' ]
 }));
 
 // ORCID callback
