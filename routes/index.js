@@ -6,6 +6,7 @@ const path = require('path');
 const _ = require('underscore');
 const disallowedAnnotationProperties = [ '<http://purl.obolibrary.org/obo/IAO_0000115>' ]
 const WORK = require('../data/work.json');
+const ONT = _.groupBy(require('../data/ontologies.json'), 'id');
 
 function processLine(parsedData, header, line) {
   const values = line.toLowerCase().split('\t');
@@ -91,9 +92,9 @@ const searchValue = (objs, orcid) => {
   return objs.filter((item, index) => item.value.match(orcid)) 
 }
 const getMatches = (user) => {
-  const orcidClassMatches = searchValue(classCredit, user.orcid);
+  const orcidClassMatches = searchValue(classCredit, user.orcid).filter((i) => i.class.split('/').slice(-1)[0].split('_')[0].match(i.oid));
   const orcidOntologyMatches = searchValue(ontologyCredit, user.orcid);
-  const nameClassMatches = searchValue(classCredit, user.name.toLowerCase());
+  const nameClassMatches = searchValue(classCredit, user.name.toLowerCase()).filter((i) => i.class.split('/').slice(-1)[0].split('_')[0].match(i.oid));
   const nameOntologyMatches = searchValue(ontologyCredit, user.name.toLowerCase());
 
   return {
@@ -119,17 +120,18 @@ router.get('/view', function(req, res, next) {
   getProfile(req.user, (rv) => {
     if(!rv) { return console.log('error'); }
     
-    console.log(rv)
+    req.user.existingOrcidUrls = _.keys(_.groupBy(rv.group[0]['work-summary'], (v) => v.url.value))
+    req.user.matchedOBOOntologies = getMatches(req.user);
 
-    const data = getMatches(req.user);
+    console.log(req.user.matchedOBOOntologies.orcidClassMatches.ecocore)
+
     res.render('view', { title: 'Credit Accord', 
-      data: data,
+      data: req.user.matchedOBOOntologies,
       orcid: req.user.orcid,
       name: req.user.name
     })
   })
 });
-
 
 router.post('/add_entries', function(req, res, next) {
   const work = { ...WORK };
